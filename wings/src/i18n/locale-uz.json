@@ -1,0 +1,98 @@
+{
+    "uz": {
+        "splash": {
+            "retrieve_info": "Ma'lumotlarni tiklash",
+            "start_navigate": "Navigatsiyani boshlash",
+            "main_error": "Ba'zi parametrlar mavjud emas. Davom etish imkonsiz.",
+            "main_error_sub": "Sahifani ochish jarayonida xatoliklar"
+        },
+        "login": {
+            "voucher_title": "Vaucher",
+            "insert_voucher": "Vaucherni kiriting",
+            "validate_code": "Tasdiqlash",
+            "error_voucher_code": "Xatolik vaucherni tasdiqlash jarayonida",
+            "error_voucher_code_sub": "Noto'g'ri vaucher, qayta urinib ko'ring.",
+            "choose_login": "Kirishni tanlang",
+            "decline": "Rad etish",
+            "accept": "Qabul qilish",
+            "disclaimer_use": "Foydalanish shartlari",
+            "disclaimer_marketing": "Maxfiylik ma'lumoti",
+            "back": "Orqaga",
+            "code": "Vaucher",
+            "navigate": "Navigatsiya qilish",
+            "navigate_in": "Ichida navigatsiya qilish",
+            "disclaimer_privacy_accept": "Reklama takliflarini qabul qilaman",
+            "disclaimer_survey_accept": "So'rov yuborishni qabul qilaman",
+            "additional_info": "",
+            "country": "Davlat",
+            "reason": "Tashrif sababi",
+            "business": "Biznes",
+            "family": "Oilaviy",
+            "other": "Boshqa",
+            "with_facebook": "Facebook orqali kirish",
+            "with_instagram": "Instagram orqali kirish",
+            "with_linkedin": "LinkedIn orqali kirish",
+            "with_sms": "SMS orqali kirish",
+            "with_email": "Elektron pochta orqali kirish",
+            "with_code": "Vaucher orqali kirish"
+        },
+        "social": {
+            "auth_progress": "Avtorizatsiya jarayoni",
+            "auth_success": "Avtorizatsiya muvaffaqiyatli o'tkazildi",
+            "auth_error": "Kirish rad etildi",
+            "auth_error_sub" : "Noto'g'ri foydalanuvchi nomi yoki parol, iltimos, qaytadan urinib ko'ring yoki qayta ro'yxatdan o'ting.",
+            "auth_error_sub_expired" : "Ushbu hisobnoma muddati tugagan, iltimos, qaytadan ro'yxatdan o'ting."
+        },
+        "email": {
+            "insert_email": "Elektron pochtangizni kiriting",
+            "insert_your_code": "Parolni kiriting",
+            "code": "Parol",
+            "have_code": "Parol bilan kirish",
+            "not_have_code": "Parol so'rang",
+            "get_code": "Parol so'rang",
+            "reset_code": "Yangi parol yuborilsin",
+            "start_navigate": "Navigatsiya qilish",
+            "error_code": "Parolni yuborishda xatolik",
+            "error_code_sub": "Elektron pochtangizga xabar yuborishda muammo, elektron pochta manzilingizni tekshirib ko'ring",
+            "auth_progress": "Avtorizatsiya jarayoni",
+            "auth_success": "Avtorizatsiya muvaffaqiyatli o'tkazildi",
+            "auth_error": "Kirish rad etildi",
+            "auth_error_sub" : "Noto'g'ri foydalanuvchi nomi yoki parol, iltimos, qaytadan urinib ko'ring yoki qayta ro'yxatdan o'ting.",
+            "auth_error_sub_expired" : "Ushbu hisobnoma muddati tugagan, iltimos, qaytadan ro'yxatdan o'ting.",
+            "wait": "Iltimos, faqat bir necha soniya kutib turing ...",
+            "we_are_sending_email_code": "Agar elektron pochtangizga xabar kelmasa, Wi-Fi tarmog'idan chiqing va qaytadan ulaning. Keyin elektron pochtangizga kirib, xabardagi havolaga bosing. SPAM papkasiga e'tibor bering!",
+            "we_are_sending_email_code_signin": "<br>Kirish uchun elektron pochtangizni va kirish kodi kiriting.<br><br>Hali ro'yxatdan o'tmagansizmi, orqaga qayting va \"ro'yxatdan o'tish\" ni bosing.<br>",
+            "not_code_explain": "Bu Wi-Fi tarmog'iga birinchi marta ulanayotganmisiz?"
+        }, 
+        "sms": {
+            "number": "Telefon raqami",
+            "insert_number": "Telefon raqamingizni kiriting",
+            "insert_your_code": "Parolni kiriting",
+            "code": "Parol",
+            "have_code": "Parol bilan kirish",
+            "not_have_code": "Parol so'rang",
+            "get_code": "Parol so'rang",
+            "reset_code": "Yangi parol yuborilsin",
+            "start_navigate": "Navigatsiya boshlanmoqda",
+            "error_code": "Parolni yuborishda xatolik",
+            "error_code_sub": "SMS yuborishida muammo, xalqaro prefiksni to'g'ri tanlashingizni va bayroqlar tizimi)",
+            "auth_progress": "Avtorizatsiya jarayoni",
+            "auth_success": "Avtorizatsiya muvaffaqiyatli o'tkazildi",
+            "auth_error": "Avtorizatsiya rad etildi",
+            "auth_error_sub" : "Noto'g'ri foydalanuvchi nomi yoki parol, iltimos, qaytadan urinib ko'ring yoki qayta ro'yxatdan o'ting.",
+            "auth_error_sub_expired" : "Ushbu hisobnoma muddati tugagan, iltimos, qaytadan ro'yxatdan o'ting.",
+            "select_state": "Davlatni tanlang",
+            "prefix": "Xalqaro prefiks",
+            "wait": "SMS yuborilmoqda ...",
+            "we_are_sending_sms_code": "Bu o'zingizga kirish uchun shu o'zgaruvchini qayta ishlatishingiz mumkin, \"Parol bilan kirish\" ni bosing.",
+            "we_are_sending_sms_code_signin": "<br>Tizimga kirish uchun telefon raqamingizni va kirish kodi kiriting.<br><br>Agar hali ro'yxatdan o'tmagansiz, qaytib qayting va \"ro'yxatdan o'tish\" ni bosing.<br>",
+            "not_code_explain": "Bu Wi-Fi tarmog'iga birinchi marta ulanayotganmisiz?"
+        }   
+    }
+}
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,66 @@
+---
+- name: Create Sun-tasks working directory
+  file:
+    path: /opt/icaro/sun-tasks/
+    state: directory
+    recurse: yes
+
+- name: Download and install Sun-tasks executable
+  get_url:
+    url: "{{ icaro.url }}/releases/download/{{ icaro.version }}/sun-tasks"
+    force: true
+    dest: /opt/icaro/sun-tasks/sun-tasks
+    mode: 0755
+
+- name: Copy Sun-tasks sytemd unit
+  copy:
+    src: usr/lib/systemd/system/sun-tasks@.service
+    dest: /usr/lib/systemd/system/sun-tasks@.service
+
+- name: Enable sun-tasks clean-tokens service
+  systemd:
+    name: sun-tasks@clean-tokens
+    daemon_reload: yes
+    enabled: yes
+
+- name: Enable sun-tasks store-sessions service
+  systemd:
+    name: sun-tasks@store-sessions
+    daemon_reload: yes
+    enabled: yes
+
+- name: Enable sun-tasks clean-sessions service
+  systemd:
+    name: sun-tasks@clean-sessions
+    daemon_reload: yes
+    enabled: yes
+
+- name: Enable sun-tasks store-users service
+  systemd:
+    name: sun-tasks@store-users
+    daemon_reload: yes
+    enabled: yes
+
+- name: Enable sun-tasks clean-short-urls service
+  systemd:
+    name: sun-tasks@clean-short-urls
+    daemon_reload: yes
+    enabled: yes
+
+- name: Enable sun-tasks clean-old-sessions service
+  systemd:
+    name: sun-tasks@clean-old-sessions
+    daemon_reload: yes
+    enabled: yes
+
+- name: Enable sun-tasks clean-auths service
+  systemd:
+    name: sun-tasks@clean-auths
+    daemon_reload: yes
+    enabled: yes
+
+- name: Enable sun-tasks clean-users service
+  systemd:
+    name: sun-tasks@clean-users
+    daemon_reload: yes
+    enabled: yes

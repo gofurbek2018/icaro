@@ -1,0 +1,43 @@
+---
+- name: Create Sun-ui root directory
+  file:
+    path: /opt/icaro/sun-ui/
+    state: directory
+    recurse: yes
+
+- name: Download Sun-ui package
+  get_url:
+    url: "{{ icaro.url }}/releases/download/{{ icaro.version }}/sun-ui.tar.gz"
+    force: yes
+    dest: /tmp/sun-ui.tar.gz
+
+- name: Unpack Sun-ui package
+  unarchive:
+    src: /tmp/sun-ui.tar.gz
+    dest: /opt/icaro/sun-ui/
+    remote_src: yes
+
+- block:
+    - name: Download Sun-ui assets
+      get_url:
+        url: "{{ icaro.sun_ui.assets_url }}"
+        force: yes
+        dest: /tmp/sun-ui-assets.tar
+    - name: Unpack Sun-ui assets
+      unarchive:
+        src: /tmp/sun-ui-assets.tar
+        dest: /opt/icaro/sun-ui/static/
+        remote_src: yes
+  when: icaro.sun_ui is defined and icaro.sun_ui.assets_url is defined
+
+- name: Copy Sun-ui config
+  template:
+    src: sun-ui_config.js.j2
+    dest: /opt/icaro/sun-ui/static/config/config.js
+  when: icaro.sun_ui is defined
+
+- name: Remove temp files
+  file:
+    path:
+      - /tmp/sun-ui.tar.gz
+    state: absent

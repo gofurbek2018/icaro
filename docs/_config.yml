@@ -1,0 +1,56 @@
+# Site settings
+title: Icaro Hotspot 
+email: sviluppo@nethesis.it
+description: >
+  Easy and simple Hotspot for small and medium businesses
+
+baseurl: "/icaro" # the subpath of your site, e.g. /blog/
+url: https://nethesis.github.io/icaro
+api_url: https://documenter.getpostman.com/view/3364668/icaro/7LjC4mU
+git_address: https://github.com/nethesis/icaro
+git_edit_address: https://github.com/nethesis/icaro/docs
+
+# theme options from https://bootswatch.com/
+# comment out this to use default Bootstrap
+bootwatch: paper
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+gems:
+  - jekyll-feed
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - .idea/
+  - .gitignore
+  - README.md
+timezone: Europe/Berlin
+defaults:
+- scope:
+    path: _posts
+    type: posts
+  values:
+    layout: post
+    sectionid: blog
+
+- scope:
+    path: _docs
+    type: docs
+  values:
+    layout: docs
+    sectionid: docs
+    seo:
+      type: "WebPage"
+
+collections:
+  docs:
+    permalink: /:collection/:path/
+    output: true
+  posts:
+    permalink: /blog/:year/:month/:day/:title/
+    output: true

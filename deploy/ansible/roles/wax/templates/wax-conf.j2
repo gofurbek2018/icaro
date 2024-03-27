@@ -1,0 +1,73 @@
+{
+    "database": {
+        "host":"{{ icaro.wax.db_hostname }}",
+        "port":"3306",
+        "name":"icaro",
+        "user": "{{ icaro.wax.db_username }}",
+        "password": "{{ icaro.wax.db_password }}"
+    },
+    "token_expires_days": 1,
+    "cors": {
+        "origins": ["http://{{ icaro.hostname }}"],
+        "headers": ["Token", "Content-Type"],
+        "methods": ["GET", "PUT", "POST", "DELETE"]
+    },
+    "disclaimers": {
+      "terms_of_use": {{ lookup('file', 'files/tos') | to_json }},
+      "marketing_use": {{ lookup('file', 'files/marketing') | to_json }}
+    },
+    "auth_social": {
+        "facebook": {
+{% if icaro.wax.facebook_client_id is defined and icaro.wax.facebook_client_secret is defined %}
+            "client_id": "{{ icaro.wax.facebook_client_id }}",
+            "client_secret": "{{ icaro.wax.facebook_client_secret }}",
+            "redirect_uri": "http://{{ icaro.hostname }}/wings/login/facebook"
+{% endif %}
+        },
+        "linkedin": {
+{% if icaro.wax.linkedin_client_id is defined and icaro.wax.linkedin_client_secret is defined %}
+            "client_id": "{{ icaro.wax.linkedin_client_id }}",
+            "client_secret": "{{ icaro.wax.linkedin_client_secret }}",
+            "redirect_uri": "http://{{ icaro.hostname }}/wings/login/linkedin"
+{% endif %}
+        },
+        "instagram": {
+{% if icaro.wax.instagram_client_id is defined and icaro.wax.instagram_client_secret is defined %}
+            "client_id": "{{ icaro.wax.instagram_client_id }}",
+            "client_secret": "{{ icaro.wax.instagram_client_secret }}",
+            "redirect_uri": "http://{{ icaro.hostname }}/wings/login/instagram"
+{% endif %}
+        }
+    },
+    "endpoints": {
+        "sms": {
+{% if icaro.wax.twilio_account_sid is defined and
+icaro.wax.twilio_auth_token is defined and
+icaro.wax.twilio_service_sid is defined %}
+            "account_sid": "{{ icaro.wax.twilio_account_sid }}",
+            "auth_token": "{{ icaro.wax.twilio_auth_token }}",
+            "service_sid": "{{ icaro.wax.twilio_service_sid }}",
+            "link": "http://{{ icaro.hostname }}/wings/login/sms",
+            "send_quota_alert": {{ icaro.wax.sms_send_quota_alert | lower }}
+
+{% endif %}
+        },
+        "email": {
+{% if icaro.wax.email_from is defined and
+icaro.wax.email_smtp_host is defined and
+icaro.wax.email_smtp_port is defined and
+icaro.wax.email_smtp_user is defined and
+icaro.wax.email_smtp_password is defined %}
+            "from": "{{ icaro.wax.email_from }}",
+            "smtp_host": "{{ icaro.wax.email_smtp_host }}",
+            "smtp_port": {{ icaro.wax.email_smtp_port }},
+            "smtp_user": "{{ icaro.wax.email_smtp_user }}",
+            "smtp_password": "{{ icaro.wax.email_smtp_password }}",
+            "link": "http://{{ icaro.hostname }}/wings/login/email"
+{% endif %}
+        }
+    },
+    "shortener": {
+        "base_url": "https://{{ icaro.hostname }}/wax/short/"
+    }
+}

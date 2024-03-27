@@ -1,0 +1,20 @@
+---
+- hosts: icaro
+  roles:
+    - role: icaro
+
+- hosts: wax
+  roles:
+    - role: wax
+
+- hosts: sun
+  roles:
+    - role: sun
+
+- hosts: ade
+  roles:
+    - role: ade
+
+- hosts: icarodb
+  roles:
+    - role: icarodb

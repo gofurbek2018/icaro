@@ -1,0 +1,126 @@
+#!/bin/bash
+#
+# Copyright (C) 2021 Nethesis S.r.l.
+# http://www.nethesis.it - info@nethesis.it
+#
+# This file is part of Icaro project.
+#
+# Icaro is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+#
+# Icaro is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Icaro.  If not, see COPYING.
+#
+
+OPT=$1
+shift
+source /opt/icaro/dedalo/config
+
+MAC_ADDRESS=$(cat /sys/class/net/$HS_INTERFACE/address 2>/dev/null| tr ':' '-' | awk '{print toupper($0)}')
+
+case "$OPT" in
+    query)
+        /usr/sbin/chilli_query -s /run/dedalo/chilli.sock "$@"
+    ;;
+    config)
+        /opt/icaro/dedalo/template/engine /opt/icaro/dedalo/template/chilli.conf.tpl
+        if [ $? -eq 0 ]; then
+            echo "Configuration generated successfully"
+        else
+            echo "Error on configuration generating"
+        fi
+    ;;
+    register)
+        # get opts
+        while getopts ":u:p:t:" o; do
+            case "${o}" in
+                u)
+                    USERNAME=${OPTARG}
+                    ;;
+                p)
+                    PASSWORD=${OPTARG}
+                    ;;
+                t)
+                    TOKEN=${OPTARG}
+                    ;;
+                *)
+                    exit 1
+                    ;;
+            esac
+        done
+        # check if username, password or token exits
+        if [ -z "$USERNAME" ] &&  [ -z "$PASSWORD" ] && [ -z "$TOKEN" ]; then
+            echo "Enter username and password or use an existing token:"
+            echo
+            echo "  $0 register -u <username> -p <password>"
+            echo "  $0 register -t <token>"
+            exit 1
+        fi
+        if [ -z "$TOKEN" ]; then
+            # get auth token using /login API
+            TOKEN=$(curl -s --request POST \
+                --url "$HS_API_URL/login" \
+                --header "Content-Type: application/json" \
+                --data "{
+                    \"username\": \"$USERNAME\",
+                    \"password\": \"$PASSWORD\"
+                }" | grep -Po '\"token\":.*?[^\\](,)*\"' | awk -F':' '{print $2}'| tr -d \")
+        fi
+        # create a new unit using /units API
+        RESP=$(curl -o /dev/null -w "%{http_code}" -s --request POST \
+            --url "$HS_API_URL/units" \
+            --header 'Content-Type: application/json' \
+            --header "Token: $TOKEN" \
+            --data "{
+                \"mac_address\": \"$MAC_ADDRESS\",
+                \"name\": \"$HS_UNIT_NAME\",
+                \"description\": \"$HS_UNIT_DESC\",
+                \"uuid\": \"$HS_UUID\",
+                \"secret\": \"$HS_SECRET\",
+                \"hotspot_id\": \"$HS_ID\"
+            }")
+        # check if everything is ok
+        if [ $? -eq 0 ] && [ "$RESP" == "409" -o "$RESP" == "201" ] ; then
+            if [ "$ID" == "0" ]; then
+                echo "Unit already added"
+                exit 0
+            else
+                echo "Unit added successfully"
+                exit 0
+            fi
+        else
+            echo "Error: unit not added!"
+            exit 1
+        fi
+    ;;
+    start)
+        systemctl start dedalo
+    ;;
+    restart)
+        systemctl restart dedalo
+    ;;
+    stop)
+        systemctl stop dedalo
+    ;;
+    status)
+        systemctl status dedalo
+    ;;
+    info)
+        echo "Dedalo: Network Access Controller"
+        echo -e "  HotSpot ID:\t\t$HS_ID"
+        echo -e "  Unit Name:\t\t$HS_UNIT_NAME"
+        echo -e "  Unit Description:\t$HS_UNIT_DESC"
+        echo -e "  Unit UUID:\t\t$HS_UUID"
+        echo -e "  Unit Secret:\t\t$HS_SECRET"
+        echo -e "  Unit MAC:\t\t$MAC_ADDRESS"
+    ;;
+    *)
+        echo "Usage: $0 { query | config | register | start | stop | restart | status | info }"
+esac

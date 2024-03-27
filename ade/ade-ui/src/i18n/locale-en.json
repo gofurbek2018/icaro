@@ -1,0 +1,20 @@
+{
+    "en": {
+        "reviews": "How do you rate us?",
+        "review_text_before": "Insert a review here",
+        "review_text_after_1": "Thank you!",
+        "review_text_after_2": "If you wish, send us your suggestions, they are very useful to improve our service.",
+        "review_good_external": "Would you like to leave us a review on one of these websites?",
+        "feedbacks": "Send an anonymous feedback",
+        "feedback_text": "If you wish to be contacted, please leave your contact details (e-mail or telephone number)",
+        "submit": "Send",
+        "not_found": "Page not found",
+        "not_found_text": "Page not found",
+        "thank_you_feedback": "Thank you for your report",
+        "thank_you_feedback_text": "",
+        "thank_you_review": "Thanks for leaving your review",
+        "thank_you_review_text": "We hope to welcome you again in the future",
+        "leave_blank_mandatory": "This message is mandatory",
+        "leave_blank_optional": "This message is optional"
+    }
+}

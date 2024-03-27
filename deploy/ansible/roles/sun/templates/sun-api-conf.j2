@@ -1,0 +1,107 @@
+{
+    "database": {
+        "host":"{{ icaro.sun_api.db_hostname }}",
+        "port":"3306",
+        "name":"icaro",
+        "user": "{{ icaro.sun_api.db_username }}",
+        "password": "{{ icaro.sun_api.db_password }}"
+    },
+    "token_expires_days": 1,
+    "cors": {
+        "origins": ["https://{{ icaro.hostname }}"],
+        "headers": ["Token", "Content-Type"],
+        "methods": ["GET", "PUT", "POST", "DELETE"]
+    },
+    "captive_portal": {
+        "title": "{{ icaro.sun_api.captive_portal_title }}",
+        "subtitle": "{{ icaro.sun_api.captive_portal_subtitle }}",
+        "description": "{{ icaro.sun_api.captive_portal_description }}",
+        "redirect": "{{ icaro.sun_api.captive_portal_redirect }}",
+        "background": "{{ icaro.sun_api.captive_portal_background }}",
+        "logo": "/opt/icaro/static/logo.png",
+        "banner": "/opt/icaro/static/banner.png",
+        "bgImage": "/opt/icaro/static/bgImage.jpg",
+        "containerBgColor": "{{ icaro.sun_api.captive_portal_container_bg_color }}",
+        "titleColor": "{{ icaro.sun_api.captive_portal_title_color }}",
+        "textColor": "{{ icaro.sun_api.captive_portal_text_color }}",
+        "textStyle": "{{ icaro.sun_api.captive_portal_text_style }}"
+    },
+    "survey": {
+        "feedback_body_text": {{ lookup('file', 'files/feedback_body') | to_json }},
+        "review_body_text":  {{ lookup('file', 'files/review_body') | to_json }},
+	"feedback_subject_text": "[$$HOTSPOT$$] Benvenuto! Welcome!",
+	"review_subject_text": "[$$HOTSPOT$$] Arrivederci! See you later!"
+     },
+    "endpoints": {
+        "email": {
+{% if icaro.sun_api.email_from is defined and
+icaro.sun_api.email_smtp_host is defined and
+icaro.sun_api.email_smtp_port is defined and
+icaro.aun_api.email_smtp_user is defined and
+icaro.sun_api.email_smtp_password is defined %}
+            "from": "{{ icaro.sun_api.email_from }}",
+            "smtp_host": "{{ icaro.sun_api.email_smtp_host }}",
+            "smtp_port": {{ icaro.sun_api.email_smtp_port }},
+            "smtp_user": "{{ icaro.sun_api.email_smtp_user }}",
+            "smtp_password": "{{ icaro.sun_api.email_smtp_password }}",
+{% endif %}
+        }
+    },
+
+    "route_blocked": {
+    "admin": [{}],
+    "customer": [{
+        "verb": "POST",
+        "endpoint": "/api/accounts"
+    }, {
+        "verb": "DELETE",
+        "endpoint": "/api/accounts/[0-9]+"
+    }, {
+        "verb": "POST",
+        "endpoint": "/api/hotspots"
+    }, {
+        "verb": "PUT",
+        "endpoint": "/api/hotspots/[0-9]+"
+    }, {
+        "verb": "DELETE",
+        "endpoint": "/api/hotspots/[0-9]+"
+    }, {
+        "verb": "POST",
+        "endpoint": "/api/units/"
+    }, {
+        "verb": "DELETE",
+        "endpoint": "/api/units/[0-9]+"
+    }, {
+        "verb": "POST",
+        "endpoint": "/api/users"
+    }],
+    "desk": [{
+        "verb": "POST",
+        "endpoint": "/api/accounts"
+    }, {
+        "verb": "DELETE",
+        "endpoint": "/api/accounts/[0-9]+"
+    }, {
+        "verb": "POST",
+        "endpoint": "/api/hotspots"
+    }, {
+        "verb": "PUT",
+        "endpoint": "/api/hotspots/[0-9]+"
+    }, {
+        "verb": "DELETE",
+        "endpoint": "/api/hotspots/[0-9]+"
+    },{
+        "verb": "POST",
+        "endpoint": "/api/preferences/hotspots"
+    }, {
+        "verb": "POST",
+        "endpoint": "/api/units/"
+    }, {
+        "verb": "DELETE",
+        "endpoint": "/api/units/[0-9]+"
+    }, {
+        "verb": "POST",
+        "endpoint": "/api/users"
+    }]
+    }
+}

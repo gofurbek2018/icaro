@@ -1,0 +1,15 @@
+[Unit]
+Description=Network access controller, runs on the firewal and intercepts all guest connections, based on CoovaChilli
+After=network.target
+Wants=dedalo_users_auth.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/icaro/dedalo/
+RuntimeDirectory=dedalo
+ExecStart=/usr/sbin/chilli -c /opt/icaro/dedalo/chilli.conf --fg
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,90 @@
+# Dedalo
+
+Network Access Controller, runs on the firewall and intercepts all guest connections, based on CoovaChilli
+
+## Daemon
+- dedalo (ad-hoc instance of chilli with dedalo configuration)
+- check dedalo status: `systemctl status dedalo`
+
+## Configuration
+
+Available options:
+
+- ``HS_INTERFACE``: dedicated network interface for CoovaChilli
+- ``HS_NETWORK``: network for clients connected to Dedalo
+- ``HS_SPLASH_PAGE_URL``: Sun (capitve portal) URL hosted on your Icaro installation, eg: ``http://icaro.mydomain.com``
+- ``HS_AAA_URL``: Wax (Radius over HTTP) URL hosted on your Icaro installation, eg: ``http://icaro.mydomain.com/wax/aaa``
+- ``HS_ID``: the name of the Hotspot already present inside Icaro, eg: ``MyHotelCompany``
+- ``HS_UNIT_NAME``: hostname of local installation, eg: ``hotelthesea.example.org``
+- ``HS_UNIT_DESC``: a descriptive name of local installation, eg: ``MyHotelAtTheSea``
+- ``HS_UUID``: a unique unit idenifier, usually a UUID, eg ``161fre6d-8578-4247-b4a2-c40dced94bdd``
+- ``HS_SECRET``: a shared secret between this unit and Icaro installation, eg: ``My$uperS3cret``
+- ``HS_DHCPSTART``: last octet of the start ip address of dhcp range, eg: 192.168.182.10 this value should be ``10``.Note that the first ip of the hotspot network is hold by the hotspot service and can't be assigned. (default 10)
+- ``HS_DHCPEND``: last octet of the last ip address of dhcp range, eg: 192.168.182.55 this value should be only ``55``. (default 254)
+- ``HS_ALLOW_ORIGIN``: hosts allowed to execute CORS requests to Dedalo, usually it corresponds to ``HS_SPLASH_PAGE_URL``, eg: ``http://icaro.mydomain.com``
+- ``HS_DNS1`` and ``HS_DNS2``: primary and secondary dns servers, if not sets, will be used the default servers (OpenDNS).
+- ``HS_MAXCLIENTS``: size of the DHCP IP pool (default `512`).
+- ``USE_UPDOWN_SCRIPTS``: flag for enable/disable use of dedalo's ipup and ipdown scripts.
+
+### Example
+```ini
+HS_INTERFACE="eth2"
+HS_NETWORK="192.168.182.0/24"
+HS_SPLASH_PAGE_URL="http://myicaro"
+HS_AAA_URL="https://myicaro"
+HS_ID="hotel-king"
+HS_UNIT_NAME="unit-king"
+HS_UNIT_DESC="unit-desc"
+HS_UUID="1610fe6d-8578-4247-b4a2-c40dced94ber"
+HS_SECRET="My__Secret99"
+HS_DHCPSTART=10
+HS_DHCPEND=55
+HS_ALLOW_ORIGINS="*"
+USE_UPDOWN_SCRIPTS=true
+```
+
+## Helper
+`Usage: ./dedalo { query | config | register| start | stop | restart | status | info }`
+- **query**: wrapper to chilli_query
+- **config**: generate `chilli.conf` based on your `config` file
+- **register**: register an unit using SUN accounts credentials
+  ```
+  dedalo register -u sun-username -p sun-password
+  ```
+- **start**: equal to `systemctl start dedalo`
+- **stop**: equal to `systemctl stop dedalo`
+- **restart**: equal to `systemctl restart dedalo`
+- **status**: equal to `systemctl status dedalo`
+- **info**: show the hotspot unit info
+  ```
+  Dedalo: Network Access Controller
+    HotSpot:            hs-test
+    Unit name:          unit-test
+    Unit description:   unit-test
+    UUID:               1610fe6d-8578-4247-b4a2-c40dced94bdd
+    Secret:             Nethesis,1234
+    MAC:                00-0D-B9-41-7C-F8
+  ```
+
+## First setup
+
+1. Change `/opt/icaro/dedalo/config` with yours configurations setting, you can generate a UUID using:
+  ```shell
+      # uuidgen
+  ```
+2. Register your unit to the Hotspot Manager:
+  ```shell
+      # dedalo register -u sun-username -p sun-password
+  ```
+3. Apply your configuration changes and regenerate CoovaChilli config:
+  ```shell
+      # dedalo config
+  ```
+4. Restart dedalo instance:
+  ```shell
+      # dedalo restart
+  ```
+5. Check dedalo status:
+  ```shell
+      # dedalo status
+  ```
